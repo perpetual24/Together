@@ -3,6 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFrameWork/Actor.h"
+#include "FunctionLib.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "Components/SceneComponent.h"
 #include "Components/ActorComponent.h"
 #include "Grabber.generated.h"
 
@@ -24,5 +28,15 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	UPhysicsHandleComponent* PhysicsHandle;
+	USceneComponent* PhysicsHandlePos;
+
+	UFUNCTION(BlueprintCallable)
+		void InitiateGrabber(UPhysicsHandleComponent* handle, USceneComponent* handlepos);
+
+	UFUNCTION(BlueprintCallable)
+		void Grab();
+
+	UFUNCTION(BlueprintCallable)
+		void Release();
 };

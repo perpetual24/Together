@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "DrawDebugHelpers.h"
 #include "Grabber.h"
 
 // Sets default values for this component's properties
@@ -18,9 +18,6 @@ UGrabber::UGrabber()
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
 
@@ -29,6 +26,26 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	PhysicsHandle->SetTargetLocationAndRotation(PhysicsHandlePos->GetComponentLocation(), PhysicsHandlePos->GetComponentRotation());
 }
 
+void UGrabber::InitiateGrabber(UPhysicsHandleComponent* handle, USceneComponent* handlepos)
+{
+	PhysicsHandle = handle;
+	PhysicsHandlePos = handlepos;
+}
+
+void UGrabber::Grab()
+{
+	auto TracedComponent = FunctionLib::ForwardLineTrace(GetOwner(), 150).GetComponent();
+	FVector TargetLoc;
+	FRotator TargetRot;
+	
+	PhysicsHandle->GetTargetLocationAndRotation(TargetLoc, TargetRot);
+	PhysicsHandle->GrabComponentAtLocationWithRotation(TracedComponent, FName("None"), TargetLoc, TargetRot);
+}
+
+void UGrabber::Release()
+{
+	PhysicsHandle->ReleaseComponent();
+}
