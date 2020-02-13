@@ -35,17 +35,51 @@ void UGrabber::InitiateGrabber(UPhysicsHandleComponent* handle, USceneComponent*
 	PhysicsHandlePos = handlepos;
 }
 
-void UGrabber::Grab()
+bool UGrabber::Grab()
 {
-	auto TracedComponent = FunctionLib::ForwardLineTrace(GetOwner(), 150).GetComponent();
+	UPrimitiveComponent* TracedComponent = FunctionLib::ForwardLineTrace(GetOwner(), 200).GetComponent();
 	FVector TargetLoc;
 	FRotator TargetRot;
-	
-	PhysicsHandle->GetTargetLocationAndRotation(TargetLoc, TargetRot);
-	PhysicsHandle->GrabComponentAtLocationWithRotation(TracedComponent, FName("None"), TargetLoc, TargetRot);
+
+	if (IsValid(TracedComponent))
+	{
+		if (TracedComponent->GetMass() >= 5000)
+		{
+			TracedComponent->SetConstraintMode(EDOFMode::XYPlane);
+		}
+
+		PhysicsHandle->GetTargetLocationAndRotation(TargetLoc, TargetRot);
+		PhysicsHandle->GrabComponentAtLocationWithRotation(TracedComponent, FName("None"), TargetLoc, TargetRot);
+
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
 }
 
 void UGrabber::Release()
 {
-	PhysicsHandle->ReleaseComponent();
+	if (IsValid(PhysicsHandle->GetGrabbedComponent()))
+	{
+		PhysicsHandle->GetGrabbedComponent()->SetConstraintMode(EDOFMode::Default);
+
+		PhysicsHandle->ReleaseComponent();
+	}
+}
+
+float UGrabber::GetInterpSpeedByMass()
+{
+	float mass = PhysicsHandle->GetGrabbedComponent()->GetMass();
+
+	return (-3.4744 * log(mass) + 31.592);
+}
+
+float UGrabber::GetMoveSpeedByMass()
+{
+	float mass = PhysicsHandle->GetGrabbedComponent()->GetMass();
+
+	return (-0.1086 * log(mass) + 1.1747);
 }

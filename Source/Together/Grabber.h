@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/PrimitiveComponent.h"
 #include "GameFrameWork/Actor.h"
 #include "FunctionLib.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
@@ -35,8 +36,14 @@ public:
 		void InitiateGrabber(UPhysicsHandleComponent* handle, USceneComponent* handlepos);
 
 	UFUNCTION(BlueprintCallable)
-		void Grab();
+		bool Grab();
 
 	UFUNCTION(BlueprintCallable)
 		void Release();
+
+	UFUNCTION(BlueprintCallable)
+		float GetInterpSpeedByMass();
+
+	UFUNCTION(BlueprintCallable)
+		float GetMoveSpeedByMass();
 };
