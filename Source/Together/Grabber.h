@@ -42,7 +42,7 @@ public:
 		void Release();
 
 	UFUNCTION(BlueprintCallable)
-		float GetInterpSpeedByMass();
+		float GetCameraSpeedByMass();
 
 	UFUNCTION(BlueprintCallable)
 		float GetMoveSpeedByMass();

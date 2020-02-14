@@ -70,16 +70,18 @@ void UGrabber::Release()
 	}
 }
 
-float UGrabber::GetInterpSpeedByMass()
+float UGrabber::GetCameraSpeedByMass()
 {
 	float mass = PhysicsHandle->GetGrabbedComponent()->GetMass();
+	float speed = -0.3909 * log(mass) + 3.4291;
 
-	return (-3.4744 * log(mass) + 31.592);
+	return FMath::Clamp(speed, 0.1f, 1.0f);
 }
 
 float UGrabber::GetMoveSpeedByMass()
 {
 	float mass = PhysicsHandle->GetGrabbedComponent()->GetMass();
+	float speed = -0.1086 * log(mass) + 1.1747;
 
-	return (-0.1086 * log(mass) + 1.1747);
+	return FMath::Clamp(speed, 0.25f, 0.5f);
 }
