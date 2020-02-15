@@ -1,7 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "DrawDebugHelpers.h"
 #include "Grabber.h"
+
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
+
+#define print(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, text)
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -13,20 +17,12 @@ UGrabber::UGrabber()
 	// ...
 }
 
-
 // Called when the game starts
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
-}
 
-
-// Called every frame
-void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	PhysicsHandle->SetTargetLocationAndRotation(PhysicsHandlePos->GetComponentLocation(), PhysicsHandlePos->GetComponentRotation());
+	PC = Cast<APlayer_C>(UGameplayStatics::GetPlayerController(this, 0));
 }
 
 void UGrabber::InitiateGrabber(UPhysicsHandleComponent* handle, USceneComponent* handlepos)
@@ -35,21 +31,50 @@ void UGrabber::InitiateGrabber(UPhysicsHandleComponent* handle, USceneComponent*
 	PhysicsHandlePos = handlepos;
 }
 
+// Called every frame
+void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (PhysicsHandle)
+	{
+		PhysicsHandle->SetTargetLocationAndRotation(PhysicsHandlePos->GetComponentLocation(), PhysicsHandlePos->GetComponentRotation());
+	}
+
+	else
+	{
+		print("Physics Handle Not Found");
+	}
+}
+
 bool UGrabber::Grab()
 {
 	UPrimitiveComponent* TracedComponent = FunctionLib::ForwardLineTrace(GetOwner(), 200).GetComponent();
 	FVector TargetLoc;
 	FRotator TargetRot;
 
-	if (IsValid(TracedComponent))
+	if (TracedComponent)
 	{
-		if (TracedComponent->GetMass() >= 5000)
+		if (PhysicsHandle)
 		{
-			TracedComponent->SetConstraintMode(EDOFMode::XYPlane);
+			PhysicsHandle->GetTargetLocationAndRotation(TargetLoc, TargetRot);
+			PhysicsHandle->GrabComponentAtLocationWithRotation(TracedComponent, FName("None"), TargetLoc, TargetRot);
 		}
 
-		PhysicsHandle->GetTargetLocationAndRotation(TargetLoc, TargetRot);
-		PhysicsHandle->GrabComponentAtLocationWithRotation(TracedComponent, FName("None"), TargetLoc, TargetRot);
+		else
+		{
+			print("Physics Handle Not Found");
+		}
+
+		if (PC)
+		{
+			PC->SetPitchLimitDuringGrab();
+		}
+
+		else
+		{
+			print("Player Controller Not Found");
+		}
 
 		return true;
 	}
@@ -62,26 +87,67 @@ bool UGrabber::Grab()
 
 void UGrabber::Release()
 {
-	if (IsValid(PhysicsHandle->GetGrabbedComponent()))
+	if (PhysicsHandle)
 	{
-		PhysicsHandle->GetGrabbedComponent()->SetConstraintMode(EDOFMode::Default);
+		if (PhysicsHandle->GetGrabbedComponent())
+		{
+			PhysicsHandle->ReleaseComponent();
 
-		PhysicsHandle->ReleaseComponent();
+			if (PC)
+			{
+				PC->SetPitchLimitToDefault();
+			}
+			else
+			{
+				print("Player Controller Not Found");
+			}
+		}
+
+		else
+		{
+			print("Grabbed Component Not Found");
+		}
 	}
+
+	else
+	{
+		print("Physics Handle Not Found");
+	}
+	
 }
 
 float UGrabber::GetCameraSpeedByMass()
 {
-	float mass = PhysicsHandle->GetGrabbedComponent()->GetMass();
-	float speed = -0.3909 * log(mass) + 3.4291;
+	if (PhysicsHandle)
+	{
+		float mass = PhysicsHandle->GetGrabbedComponent()->GetMass();
+		float speed = -0.3909 * log(mass) + 3.4291;
 
-	return FMath::Clamp(speed, 0.1f, 1.0f);
+		return FMath::Clamp(speed, 0.1f, 1.0f);
+	}
+	
+	else
+	{
+		print("Physics Handle Not Found");
+
+		return 1.0f;
+	}
 }
 
 float UGrabber::GetMoveSpeedByMass()
 {
-	float mass = PhysicsHandle->GetGrabbedComponent()->GetMass();
-	float speed = -0.1086 * log(mass) + 1.1747;
+	if (PhysicsHandle)
+	{
+		float mass = PhysicsHandle->GetGrabbedComponent()->GetMass();
+		float speed = -0.1086 * log(mass) + 1.1747;
 
-	return FMath::Clamp(speed, 0.25f, 0.5f);
+		return FMath::Clamp(speed, 0.25f, 0.5f);
+	}
+
+	else
+	{
+		print("Physics Handle Not Found");
+
+		return 0.5f;
+	}
 }

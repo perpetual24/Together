@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Player_C.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/PrimitiveComponent.h"
 #include "GameFrameWork/Actor.h"
 #include "FunctionLib.h"
@@ -29,8 +31,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPhysicsHandleComponent* PhysicsHandle;
-	USceneComponent* PhysicsHandlePos;
+	APlayer_C* PC = nullptr;
+
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+	USceneComponent* PhysicsHandlePos = nullptr;
 
 	UFUNCTION(BlueprintCallable)
 		void InitiateGrabber(UPhysicsHandleComponent* handle, USceneComponent* handlepos);
