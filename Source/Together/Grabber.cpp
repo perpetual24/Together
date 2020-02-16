@@ -49,7 +49,9 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 bool UGrabber::Grab()
 {
-	UPrimitiveComponent* TracedComponent = FunctionLib::ForwardLineTrace(GetOwner(), 200).GetComponent();
+	FHitResult Hit = FunctionLib::ForwardLineTrace(GetOwner(), 200);
+	UPrimitiveComponent* TracedComponent = Hit.GetComponent();
+
 	FVector TargetLoc;
 	FRotator TargetRot;
 
