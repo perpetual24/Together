@@ -3,4 +3,4 @@
 *You can see process of Project at [Notion](https://www.notion.so/rukasp/Project-Together-ecc53d8874ed4d47948afb8b53c7d10e)*
 # Project Together
 ## Structure (In Progress..)
-<img src="https://user-images.githubusercontent.com/25034289/74578434-0134f700-4fd8-11ea-8c8b-364780c69495.png" height="600">
+<img src="https://user-images.githubusercontent.com/25034289/74601863-0ed8a280-50e6-11ea-8dc1-877b9463b076.png" height="600">
