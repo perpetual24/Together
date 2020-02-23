@@ -13,11 +13,14 @@
 UENUM(BlueprintType)
 enum class EArea : uint8
 {
-	Dorm_1F_E,
+	Dorm_1F_Bridge_Hall,
+	Dorm_1F_E_Hall,
 	Dorm_1F_E_Stair,
-	Dorm_1F_W,
+	Dorm_1F_W_Hall,
 	Dorm_1F_W_Stair,
-	Dorm_1F_Bridge
+	Dorm_2F_Bridge_Hall,
+	Dorm_2F_E_Hall,
+	Dorm_2F_W_Hall
 };
 UCLASS()
 class TOGETHER_API UAreaEnum : public UUserDefinedEnum
