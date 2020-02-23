@@ -6,4 +6,4 @@
 ![hall](https://user-images.githubusercontent.com/25034289/74009188-0f768800-49c6-11ea-80fa-c5b21b14d78c.gif)
 ![outside](https://user-images.githubusercontent.com/25034289/74828161-fec4fb00-5351-11ea-91b6-03ecd69c1548.png)
 ## Structure (In Progress..)
-<img src="https://user-images.githubusercontent.com/25034289/74601863-0ed8a280-50e6-11ea-8dc1-877b9463b076.png" height="600">
+<img src="https://user-images.githubusercontent.com/25034289/75104455-6928b480-564c-11ea-8433-0652c50288d4.png">
