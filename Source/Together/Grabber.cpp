@@ -49,7 +49,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 bool UGrabber::Grab()
 {
-	FHitResult Hit = UFuncLib::LineTraceWithDir(GetOwner(), EDirection::Forward, 200);
+	/*FHitResult Hit = UFuncLib::LineTraceWithDir(GetOwner(), EDirection::Forward, 200);
 	UPrimitiveComponent* TracedComponent = Hit.GetComponent();
 
 	FVector TargetLoc;
@@ -84,7 +84,9 @@ bool UGrabber::Grab()
 	else
 	{
 		return false;
-	}
+	}*/
+
+	return false;
 }
 
 void UGrabber::Release()
