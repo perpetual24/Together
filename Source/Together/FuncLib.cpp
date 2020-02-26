@@ -1,7 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FuncLib.h"
+#include "DrawDebugHelpers.h"
+#include <EngineGlobals.h>
 #include <Runtime/Engine/Classes/Engine/Engine.h>
+
+#define print(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.5, FColor::Red, text)
 
 FVector UFuncLib::GetActorDir(AActor* target, EDirection dir)
 {
@@ -31,24 +35,36 @@ FVector UFuncLib::GetActorDir(AActor* target, EDirection dir)
 FHitResult UFuncLib::LineTraceWithDir(AActor* target, EDirection dir, int dist)
 {
 	FHitResult TraceHitResult;
+	FVector actorloc = target->GetActorLocation();
 	FVector dirvec = UFuncLib::GetActorDir(target, dir);
-	target->GetWorld()->LineTraceSingleByChannel(TraceHitResult, target->GetActorLocation(), target->GetActorLocation() + dirvec * dist, ECollisionChannel::ECC_Visibility);
+	target->GetWorld()->LineTraceSingleByChannel(TraceHitResult, actorloc, FVector(actorloc.X + dirvec.X * dist, actorloc.Y + dirvec.Y * dist, actorloc.Z + dirvec.Z * dist), ECollisionChannel::ECC_Visibility);
 
 	return TraceHitResult;
 }
 
-void UFuncLib::PlayFootstepSound(AActor* target, float volume)
+void UFuncLib::PlayFootstepSound(AActor* target, UPhysicalMaterial* phymat, float volume)
 {
-	auto surface = Cast<UGameInst>(GEngine->GetWorld()->GetGameInstance())->Surface;
+	TArray<UPhysicalMaterial*> surface;
+	UGameInstance* gminst = target->GetGameInstance();
+
+	if (gminst)
+	{
+		surface = Cast<UGameInst>(gminst)->Surface;
+	}
+	else { print("Game Instance Not Found!"); }
+
+	int index = surface.Find(phymat);
+
 	UAudioComponent* audiocomp = target->FindComponentByClass<UAudioComponent>();
 
-	UPhysicalMaterial* physicsmat = UFuncLib::LineTraceWithDir(target, EDirection::Down, 150).PhysMaterial.Get();
-	int index = surface.Find(physicsmat);
+	if (audiocomp)
+	{
+		audiocomp->SetBoolParameter("step_play", true);
+		audiocomp->SetFloatParameter("step_volume", volume);
+		audiocomp->SetIntParameter("floor", index);
+		audiocomp->SetBoolParameter("IsMale", true);
 
-	audiocomp->SetBoolParameter("step_play", true);
-	audiocomp->SetFloatParameter("step_volume", volume);
-	audiocomp->SetIntParameter("floor", index);
-	audiocomp->SetBoolParameter("IsMale", true);
-	
-	audiocomp->Play();
+		audiocomp->Play();
+	}
+	else { print("AudioComponent Not Found!"); }
 }

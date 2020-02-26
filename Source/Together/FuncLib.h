@@ -35,5 +35,5 @@ public:
 	static FHitResult LineTraceWithDir(AActor* target, EDirection dir, int dist = 200);
 
 	UFUNCTION(BlueprintCallable)
-	static void PlayFootstepSound(AActor* target, float volume);
+	static void PlayFootstepSound(AActor* target, UPhysicalMaterial* phymat, float volume);
 };
