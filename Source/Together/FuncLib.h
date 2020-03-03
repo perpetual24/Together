@@ -8,6 +8,7 @@
 #include "Camera/CameraShake.h"
 #include "GameInst.h"
 #include "Components/AudioComponent.h"
+#include "Math/UnrealMathUtility.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuncLib.generated.h"
 
@@ -19,4 +20,13 @@ class TOGETHER_API UFuncLib : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable)
 	static void PlayFootstepSound(AActor* target, UPhysicalMaterial* phymat, float volume);
+
+	UFUNCTION(BlueprintCallable)
+	static FVector RandomVector(FVector from, FVector to);
+
+	UFUNCTION(BlueprintCallable)
+	static FRotator RandomRotator(FRotator from, FRotator to);
+
+	UFUNCTION(BlueprintCallable)
+	static void SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot);
 };

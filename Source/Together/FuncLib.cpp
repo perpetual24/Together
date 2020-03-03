@@ -39,5 +39,30 @@ void UFuncLib::PlayFootstepSound(AActor* target, UPhysicalMaterial* phymat, floa
 	{
 		print("Physics Material Not found!");
 	}
-	
+}
+
+FVector UFuncLib::RandomVector(FVector from, FVector to)
+{
+	float x = FMath::RandRange(from.X, to.X);
+	float y = FMath::RandRange(from.Y, to.Y);
+	float z = FMath::RandRange(from.Z, to.Z);
+
+	return FVector(x, y, z);
+}
+
+FRotator UFuncLib::RandomRotator(FRotator from, FRotator to)
+{
+	float yaw = FMath::RandRange(from.Yaw, to.Yaw);
+	float pitch = FMath::RandRange(from.Pitch, to.Pitch);
+	float roll = FMath::RandRange(from.Roll, to.Roll);
+
+	return FRotator(pitch, yaw, roll);
+}
+
+void UFuncLib::SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot)
+{
+	AActor* object = target->GetWorld()->SpawnActor<AActor>(actorclass, loc, rot);
+	float zcor = (object->GetActorLocation() - object->FindComponentByClass<UStaticMeshComponent>()->GetSocketLocation("Loc_under")).Z;
+
+	object->SetActorLocation(loc + zcor);
 }
