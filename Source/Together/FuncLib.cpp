@@ -59,10 +59,15 @@ FRotator UFuncLib::RandomRotator(FRotator from, FRotator to)
 	return FRotator(pitch, yaw, roll);
 }
 
-void UFuncLib::SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot)
+AActor* UFuncLib::SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot)
 {
-	AActor* object = target->GetWorld()->SpawnActor<AActor>(actorclass, loc, rot);
+	FActorSpawnParameters spawnpar;
+	spawnpar.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	AActor* object = target->GetWorld()->SpawnActor<AActor>(actorclass, loc, rot, spawnpar);
 	float zcor = (object->GetActorLocation() - object->FindComponentByClass<UStaticMeshComponent>()->GetSocketLocation("Loc_under")).Z;
 
-	object->SetActorLocation(loc + zcor);
+	object->SetActorLocation(FVector(loc.X, loc.Y, loc.Z + zcor));
+
+	return object;
 }

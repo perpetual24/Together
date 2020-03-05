@@ -28,5 +28,5 @@ public:
 	static FRotator RandomRotator(FRotator from, FRotator to);
 
 	UFUNCTION(BlueprintCallable)
-	static void SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot);
+	static AActor* SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot);
 };
