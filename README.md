@@ -13,8 +13,13 @@
 ## Game System
 ### 상대적 소리
 #### 상대적 소리 강도 측정법
-- 적과의 거리를 적당히(10000) 나눈 값에, Stimulus Strength를 곱한 값을 사용
+
+> 10000 * Stimulus Strength / (발생지와의 거리)
+
+- 가까울수록, Stimulus Strength 가 높을 수록 강도가 커짐
+
 #### Stimulus Strength
+소리의 종류에 따른 강도를 구별하기 위해 사용
 |항목|Strength|
 |----|--------|
 |Player-Walk|0.2|
