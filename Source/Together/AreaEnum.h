@@ -26,6 +26,8 @@ enum class EArea : uint8
 	D_G03,
 	D_G04,
 	D_G05,
+	D_Basement_Stair,
+	D_Basement,
 	D_Garden,
 	D101,
 	D102,
