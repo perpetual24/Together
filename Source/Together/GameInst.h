@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
-#include "AreaEnum.h"
+#include "Area.h"
 #include "Engine/GameInstance.h"
 #include "GameInst.generated.h"
 
@@ -21,8 +21,11 @@ public:
 	TArray<UPhysicalMaterial*> Surface;
 
 	UPROPERTY(BlueprintReadWrite)
-	EArea PlayerArea;
+	AArea* PlayerArea;
 
 	UPROPERTY(BlueprintReadWrite)
-	EArea EnermyArea;
+	AArea* EnermyArea;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<AArea*> Areas;
 };

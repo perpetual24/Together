@@ -9,6 +9,7 @@
 #include "GameInst.h"
 #include "Components/AudioComponent.h"
 #include "Math/UnrealMathUtility.h"
+#include "Area.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuncLib.generated.h"
 
@@ -29,4 +30,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static AActor* SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot);
+
+	UFUNCTION(BlueprintCallable)
+	static AArea* GetAreaClass(AActor* Actor, EArea AreaEnum);
 };

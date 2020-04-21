@@ -71,3 +71,26 @@ AActor* UFuncLib::SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AA
 
 	return object;
 }
+
+AArea* UFuncLib::GetAreaClass(AActor* Actor, EArea FindAreaEnum)
+{
+	UGameInstance* gminst = Actor->GetGameInstance();
+	TArray<AArea*> areas;
+
+	if (gminst)
+	{
+		areas = Cast<UGameInst>(gminst)->Areas;
+	}
+	else { print("Game Instance Not Found!"); }
+
+	for (AArea* a : areas)
+	{
+		if (a->AreaEnum == FindAreaEnum)
+		{
+			return a;
+		}
+	}
+
+	return nullptr;
+}
+
