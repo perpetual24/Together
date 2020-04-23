@@ -24,7 +24,7 @@ public:
 	AArea* PlayerArea;
 
 	UPROPERTY(BlueprintReadWrite)
-	AArea* EnermyArea;
+	AArea* EnemyArea;
 
 	UPROPERTY(BlueprintReadWrite)
 	TArray<AArea*> Areas;
