@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Area.h"
+#include "Kismet/GameplayStatics.h"
 #include "Engine/GameInstance.h"
 #include "GameInst.generated.h"
 
@@ -28,4 +29,13 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	TArray<AArea*> Areas;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<AArea*> Rooms;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<AArea*> Halls;
+
+	UFUNCTION(BlueprintCallable)
+	void InitiateAreas();
 };
