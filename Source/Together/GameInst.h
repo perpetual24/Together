@@ -21,20 +21,22 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<UPhysicalMaterial*> Surface;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "PawnArea")
 	AArea* PlayerArea;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "PawnArea")
 	AArea* EnemyArea;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Area Arrays")
 	TArray<AArea*> Areas;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Area Arrays")
 	TArray<AArea*> Rooms;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Area Arrays")
 	TArray<AArea*> Halls;
+
+	TArray<EArea> halls_enum = { EArea::D_1F_Bridge_Hall, EArea::D_1F_E_Hall, EArea::D_1F_E_Stair, EArea::D_1F_W_Hall, EArea::D_1F_W_Stair, EArea::D_2F_Bridge_Hall, EArea::D_2F_E_Hall, EArea::D_2F_W_Hall, EArea::D_Basement_Stair, EArea::D_Basement, EArea::D_Garden };
 
 	UFUNCTION(BlueprintCallable)
 	void InitiateAreas();
