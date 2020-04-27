@@ -33,4 +33,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static AArea* GetAreaClass(AActor* Actor, EArea AreaEnum);
+
+	UFUNCTION(BlueprintCallable)
+	static float GetSoundStrength(float stimulus_strength, FVector impulser, FVector receiver, float multiplier = 1.0f);
 };

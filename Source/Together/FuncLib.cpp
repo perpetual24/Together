@@ -94,3 +94,7 @@ AArea* UFuncLib::GetAreaClass(AActor* Actor, EArea FindAreaEnum)
 	return nullptr;
 }
 
+float UFuncLib::GetSoundStrength(float stimulus_strength, FVector impulser, FVector receiver, float multiplier)
+{
+	return multiplier * stimulus_strength * (1 / (FVector::Distance(impulser, receiver) / 10000));
+}
