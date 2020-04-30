@@ -10,6 +10,7 @@
 #include "Components/AudioComponent.h"
 #include "Math/UnrealMathUtility.h"
 #include "Area.h"
+#include "Components/BoxComponent.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuncLib.generated.h"
 
