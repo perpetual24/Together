@@ -36,7 +36,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static AArea* GetAreaClass(AActor* Actor, EArea AreaEnum, int index, bool random);
 
+	UFUNCTION(BlueprintCallable)
+	static AArea* GetAreaClassFromVector(AActor* Actor, FVector vector);
+
 	//TODO: Will be Moved to Doll_AI Class
 	UFUNCTION(BlueprintCallable)
 	static float GetSoundStrength(float stimulus_strength, FVector impulser, FVector receiver, float multiplier = 1.0f);
+
+	UFUNCTION(BlueprintCallable)
+	static bool isVectorInArea(FVector vector, AArea* area);
 };

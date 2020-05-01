@@ -12,6 +12,15 @@ void AArea::GetXYPoint(FVector& p_minus, FVector& p_plus)
 	p_plus = arealoc + FVector(box_extent.X, box_extent.Y, box_extent.Z * -1);
 }
 
+void AArea::GetXYZPoint(FVector& p_minus, FVector& p_plus)
+{
+	auto box_extent = Cast<UBoxComponent>(GetCollisionComponent())->GetUnscaledBoxExtent();
+	FVector arealoc = GetActorLocation();
+
+	p_minus = arealoc - box_extent;
+	p_plus = arealoc + box_extent;
+}
+
 void AArea::ResizeXYPoint(float percent_x, float percent_y, FVector p_minus, FVector p_plus, FVector& resized_p_minus, FVector& resized_p_plus)
 {
 	float x_dist = p_plus.X - p_minus.X;

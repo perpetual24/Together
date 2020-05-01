@@ -107,7 +107,49 @@ AArea* UFuncLib::GetAreaClass(AActor* Actor, EArea FindAreaEnum, int index, bool
 	}
 }
 
+AArea* UFuncLib::GetAreaClassFromVector(AActor* Actor, FVector vector)
+{
+	UGameInstance* gminst = Actor->GetGameInstance();
+	TArray<AArea*> areas;
+	TArray<AArea*> sel_areas;
+
+	if (gminst)
+	{
+		areas = Cast<UGameInst>(gminst)->Areas;
+	}
+	else { print("Game Instance Not Found!"); }
+
+	for (AArea* a : areas)
+	{
+		if (isVectorInArea(vector, a))
+		{
+			return a;
+		}
+	}
+
+	return nullptr;
+}
+
 float UFuncLib::GetSoundStrength(float stimulus_strength, FVector impulser, FVector receiver, float multiplier)
 {
 	return multiplier * stimulus_strength * (1 / (FVector::Distance(impulser, receiver) / 10000));
+}
+
+bool UFuncLib::isVectorInArea(FVector vector, AArea* area)
+{
+	FVector p1, p2;
+	area->GetXYZPoint(p1, p2);
+
+	if (p1.X <= vector.X && vector.X <= p2.X)
+	{
+		if (p1.Y <= vector.Y && vector.Y <= p2.Y)
+		{
+			if (p1.Z <= vector.Z && vector.Z <= p2.Z)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
 }

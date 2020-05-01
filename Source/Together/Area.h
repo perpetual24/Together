@@ -31,6 +31,9 @@ public:
 	void GetXYPoint(FVector& p_minus, FVector& p_plus);
 
 	UFUNCTION(BlueprintCallable)
+	void GetXYZPoint(FVector& p_minus, FVector& p_plus);
+
+	UFUNCTION(BlueprintCallable)
 	void ResizeXYPoint(float percent_x, float percent_y, FVector p_minus, FVector p_plus, FVector& resized_p_minus, FVector& resized_p_plus);
 
 	UFUNCTION(BlueprintCallable)
