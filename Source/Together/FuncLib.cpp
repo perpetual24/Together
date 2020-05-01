@@ -72,10 +72,11 @@ AActor* UFuncLib::SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AA
 	return object;
 }
 
-AArea* UFuncLib::GetAreaClass(AActor* Actor, EArea FindAreaEnum)
+AArea* UFuncLib::GetAreaClass(AActor* Actor, EArea FindAreaEnum, int index, bool random)
 {
 	UGameInstance* gminst = Actor->GetGameInstance();
 	TArray<AArea*> areas;
+	TArray<AArea*> sel_areas;
 
 	if (gminst)
 	{
@@ -87,11 +88,23 @@ AArea* UFuncLib::GetAreaClass(AActor* Actor, EArea FindAreaEnum)
 	{
 		if (a->AreaEnum == FindAreaEnum)
 		{
-			return a;
+			sel_areas.Add(a);
 		}
 	}
 
-	return nullptr;
+	if (random)
+	{
+		index = FMath::RandRange(0, sel_areas.Num() - 1);
+	}
+
+	if (sel_areas.Num() != 0)
+	{
+		return sel_areas[index];
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 float UFuncLib::GetSoundStrength(float stimulus_strength, FVector impulser, FVector receiver, float multiplier)

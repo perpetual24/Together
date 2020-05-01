@@ -29,12 +29,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static FRotator RandomRotator(FRotator from, FRotator to);
 
+	//TODO: Will be Moved to SpawnActor Class
 	UFUNCTION(BlueprintCallable)
 	static AActor* SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot);
 
 	UFUNCTION(BlueprintCallable)
-	static AArea* GetAreaClass(AActor* Actor, EArea AreaEnum);
+	static AArea* GetAreaClass(AActor* Actor, EArea AreaEnum, int index, bool random);
 
+	//TODO: Will be Moved to Doll_AI Class
 	UFUNCTION(BlueprintCallable)
 	static float GetSoundStrength(float stimulus_strength, FVector impulser, FVector receiver, float multiplier = 1.0f);
 };
