@@ -107,6 +107,29 @@ AArea* UFuncLib::GetAreaClass(AActor* Actor, EArea FindAreaEnum, int index, bool
 	}
 }
 
+TArray<AArea*> UFuncLib::GetAreaClasses(AActor* Actor, EArea FindAreaEnum)
+{
+	UGameInstance* gminst = Actor->GetGameInstance();
+	TArray<AArea*> areas;
+	TArray<AArea*> sel_areas;
+
+	if (gminst)
+	{
+		areas = Cast<UGameInst>(gminst)->Areas;
+	}
+	else { print("Game Instance Not Found!"); }
+
+	for (AArea* a : areas)
+	{
+		if (a->AreaEnum == FindAreaEnum)
+		{
+			sel_areas.AddUnique(a);
+		}
+	}
+
+	return sel_areas;
+}
+
 AArea* UFuncLib::GetAreaClassFromVector(AActor* Actor, FVector vector)
 {
 	UGameInstance* gminst = Actor->GetGameInstance();

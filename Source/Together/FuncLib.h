@@ -34,7 +34,10 @@ public:
 	static AActor* SpawnActorWithZCorrection(AActor* target, TSubclassOf<class AActor> actorclass, FVector loc, FRotator rot);
 
 	UFUNCTION(BlueprintCallable)
-	static AArea* GetAreaClass(AActor* Actor, EArea AreaEnum, int index, bool random);
+	static AArea* GetAreaClass(AActor* Actor, EArea FindAreaEnum, int index, bool random);
+
+	UFUNCTION(BlueprintCallable)
+	static TArray<AArea*> GetAreaClasses(AActor* Actor, EArea FindAreaEnum);
 
 	UFUNCTION(BlueprintCallable)
 	static AArea* GetAreaClassFromVector(AActor* Actor, FVector vector);
