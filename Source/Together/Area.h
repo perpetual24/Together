@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AreaEnum.h"
+#include "Math/UnrealMathUtility.h"
 #include "Engine/TriggerBox.h"
 #include "Components/BoxComponent.h"
 #include "Area.generated.h"
